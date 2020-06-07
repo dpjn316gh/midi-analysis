@@ -30,5 +30,5 @@ def convert_midi_file_to_text(midi_file: str):
     write_file(text_file_absolute_path, content)
 
 
-file = 'example.mid'
+file = 'hannon.mid'
 convert_midi_file_to_text(file)
