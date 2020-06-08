@@ -7,7 +7,7 @@ Time=0  Meta Text, type=0x07 (Cue Point)  leng=21
 Time=0  Meta Text, type=0x07 (Cue Point)  leng=31
      Text = <http://www.rosegardenmusic.com/>
 Time=0  Tempo, microseconds-per-MIDI-quarter-note=500000
-Time=0  Time signature=3/4  MIDI-clocks/click=36  32nd-notes/24-MIDI-clocks=8
+Time=0  Time signature=6/8  MIDI-clocks/click=36  32nd-notes/24-MIDI-clocks=8
 Time=193920  Meta event, end of track
 Track end
 Track start

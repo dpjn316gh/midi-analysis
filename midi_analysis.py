@@ -1,10 +1,10 @@
+from fractions import Fraction
 from re import search, findall
 
 from converter import get_absolute_path_for_file, text_files_folder_path
 
-standard_duration = 480
 analysis_folder_path = 'analysis'
-
+resolution = 480, 4
 exp_pitch = 'pitch=(\d+) '
 exp_vol = 'vol=(\d+)'
 exp_time = 'Time=(\d+) '
@@ -24,13 +24,16 @@ def get_notes(text_file_name: str) -> list:
             if 'division' in i:
                 if search(exp_division, i):
                     division = int(search(exp_division, i).groups()[0])
-                    if standard_duration != division:
+                    if division != 480:
                         print(f"WARNING Division: {division}")
 
             if 'signature' in i:
                 if search(exp_signature, i):
-                    numerator, denominator = search(exp_signature, i).groups()
-                    div = int(division) // int(standard_duration) * int(numerator) * standard_duration
+                    numerator, denominator = int(search(exp_signature, i).groups()[0]), \
+                                             int(search(exp_signature, i).groups()[1])
+                    signature = Fraction(numerator, denominator)
+                    div = signature * division * resolution[1]
+
                     print(div)
 
             if 'Note on' in i:
@@ -39,7 +42,7 @@ def get_notes(text_file_name: str) -> list:
                     v = int(findall(exp_vol, i)[0])
                     start = int(findall(exp_time, i)[0])
                     note.append(
-                        [n, v, -start, False, start, int(start / div), int(int((start % div) / standard_duration))])
+                        [n, v, -start, False, start, int(start / div), int(int((start % div) / resolution[0]))])
 
             if 'Note off' in i:
                 if search(exp_pitch, i) and search(exp_vol, i) and search(exp_time, i):
