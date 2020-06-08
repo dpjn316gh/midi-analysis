@@ -1,12 +1,12 @@
-import subprocess
 from os.path import realpath, dirname, join, splitext
+from subprocess import Popen, PIPE
 
 midi_files_folder_path = 'midi-files'
 text_files_folder_path = 'text'
 
 
 def execute_mftext_program(midi_file: str) -> str:
-    process = subprocess.Popen(['mftext', f'{midi_file}'], stdout=subprocess.PIPE)
+    process = Popen(['mftext', f'{midi_file}'], stdout=PIPE)
     return process.communicate()[0]
 
 
@@ -28,7 +28,3 @@ def convert_midi_file_to_text(midi_file: str):
     content = execute_mftext_program(midi_file_absolute_path)
     text_file_absolute_path = get_absolute_path_for_file(midi_file, text_files_folder_path, 'txt')
     write_file(text_file_absolute_path, content)
-
-
-file = 'hannon.mid'
-convert_midi_file_to_text(file)
